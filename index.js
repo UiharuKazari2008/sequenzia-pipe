@@ -1,11 +1,12 @@
 const config = require('./config.json')
 const express = require("express");
-const app = module.exports = express();
+const app = express();
 const request = require("request");
 const cors = require('cors');
 const morgan = require('morgan');
 const rateLimit = require("express-rate-limit");
-const https = require("https");
+const https = require("https");;
+
 
 app.use(function (req, res, next) {
     res.setHeader('X-Powered-By', 'Sequenzia CDN Proxy Pipe');
@@ -75,7 +76,7 @@ app.use('/pipe', async function (req, res) {
     }
 });
 
-const server = app.listen((process.env.NODE_APP_INSTANCE) ? parseInt(process.env.NODE_APP_INSTANCE.toString()) + config.port : config.port, () => {
+const server = app.listen((process.env.NODE_APP_INSTANCE) ? parseInt(process.env.NODE_APP_INSTANCE.toString()) + config.port : config.port, (config.interface) ? config.interface : "0.0.0.0", () => {
     console.log(`Proxy server is running on port ${server.address().port}`);
     if (process.hasOwnProperty("send"))
         process.send('ready');
