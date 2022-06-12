@@ -16,7 +16,6 @@ app.use(function (req, res, next) {
 })
 app.use(cors());
 app.use(morgan(function(tokens, req, res) {
-    const baseURL = req.url.split('/')[1].split('?')[0]
     if (res.statusCode !== 304 && res.method === 'GET') {
         console.log(`${req.method} ${res.statusCode} ${req.originalUrl} - Completed in ${tokens['response-time'](req, res)}ms - Send ${tokens.res(req, res, 'content-length')}`)
     } else {
@@ -76,7 +75,7 @@ app.use('/pipe', async function (req, res) {
     }
 });
 
-const server = app.listen((process.env.NODE_APP_INSTANCE) ? parseInt(process.env.NODE_APP_INSTANCE.toString()) + config.port : config.port, (newServer) => {
+const server = app.listen((process.env.NODE_APP_INSTANCE) ? parseInt(process.env.NODE_APP_INSTANCE.toString()) + config.port : config.port, () => {
     console.log(`Proxy server is running on port ${server.address().port}`);
     if (process.hasOwnProperty("send"))
         process.send('ready');
