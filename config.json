@@ -1,0 +1,5 @@
+{
+  "port": 4500,
+  "watchdog_host": false,
+  "watchdog_id": false
+}
